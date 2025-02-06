@@ -1,9 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { saveUser } from '../redux/userSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+//   dispatch est utilisé pour ecrire dans le reducer 
+  const dispatch = useAppDispatch();
+//   const user = useAppSelector((state)=>state.user);
+//   console.log("user : ",user);
 //   const [error, setError] = useState('');
 
 const readPost = async () => { 
@@ -22,7 +28,8 @@ const login = async (email:string , password:string) => {
             password : password
         }
         const dataLogin = await axios.post('http://127.0.0.1:8000/api/login', params);
-        console.log(dataLogin);
+        // console.log("data : ",dataLogin.data);
+        dispatch(saveUser(dataLogin.data));
     } catch (error) {
         console.log(error);
     }
@@ -53,7 +60,7 @@ useEffect(()=>{
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              // required
             />
           </div>
 
@@ -67,7 +74,7 @@ useEffect(()=>{
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              // required
             />
           </div>
 

@@ -1,20 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UserAndToken } from "./types";
 
-export interface User {
-    name: string,
-    email: string,
-    created_at: string,
-    update_at: string,
-    id: number
-}
-export interface UserState{
-    user: User,
-    token: string
-}
 
-const initialState : UserState = null;
+type AuthUserOrNull = UserAndToken | null;
 
-export const userSlice = createSlice{
-    name: "user",
+const initialState : AuthUserOrNull = null;
 
-}
+export const userSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {
+        saveUser: (state , actions) =>{
+            // retourner la nouvelle valeur de user (state)
+            return actions.payload;
+        }
+    }
+})
+
+// exportation de mes actions creator ' fonctions qui permettent d'ecrire dans mon 
+export const { saveUser } = userSlice.actions
+
+// exportation de mon reducer userSlice
+export default userSlice.reducer;
